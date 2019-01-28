@@ -618,3 +618,19 @@ pre tt:after {
     font-size: 100%;
   }
 }
+/* Kendo Treeview Overrides */
+.k-in {
+  width: 100%;
+  height: 100%;
+  /* padding: 10px 0 !important; */
+}
+
+.k-in:hover {
+  color: inherit !important;
+}
+
+.k-treeview .k-in.k-state-focused {
+  border: none !important;
+  border-right: 3px solid #ededed !important;
+  box-shadow: none !important;
+}

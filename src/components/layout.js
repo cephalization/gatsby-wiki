@@ -4,7 +4,10 @@ import { StaticQuery, graphql } from 'gatsby';
 
 import Sidebar from './sidebar';
 import Header from './header';
+
+import '@progress/kendo-theme-default/dist/all.css';
 import './layout.css';
+import './layout-custom.css';
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -20,22 +23,17 @@ const Layout = ({ children }) => (
     render={data => (
       <>
         <Header siteTitle={data.site.siteMetadata.title} />
-        <Sidebar />
-        <div
-          style={{
-            margin: `0 auto`,
-            maxWidth: 960,
-            padding: `0px 1.0875rem 1.45rem`,
-            paddingTop: 0,
-          }}
-        >
-          {children}
-          <hr />
-          <footer>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
-          </footer>
+        <div className="container-flex">
+          <Sidebar className="sidebar-flex" />
+          <div className="content-flex">
+            {children}
+            <hr />
+            <footer>
+              © {new Date().getFullYear()}, Built with
+              {` `}
+              <a href="https://www.gatsbyjs.org">Gatsby</a>
+            </footer>
+          </div>
         </div>
       </>
     )}

@@ -5,6 +5,9 @@
   "version": "0.1.0",
   "author": "Anthony Powell <adpowell@mtu.edu>",
   "dependencies": {
+    "@progress/kendo-react-animation": "^2.6.1",
+    "@progress/kendo-react-treeview": "^2.6.1",
+    "@progress/kendo-theme-default": "^3.2.0",
     "gatsby": "^2.0.98",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-manifest": "^2.0.9",
