@@ -56,35 +56,76 @@ class NavTree extends Component {
 
     this.kendoConvert = this.kendoConvert.bind(this);
     this.convertTreeToKendoTree = this.convertTreeToKendoTree.bind(this);
+    this.collapseChildrenItems = this.collapseChildrenItems.bind(this);
     this.updateTree = this.updateTree.bind(this);
-    this.expandItem = this.expandItem.bind(this);
+    this.expandItem = this.toggleItemExpansion.bind(this);
   }
 
   componentDidMount() {
     this.updateTree();
   }
 
-  updateTree() {
-    this.setState({ tree: this.kendoConvert() }, () => console.log(this.state));
-  }
-
-  expandItem({ item }) {
-    const { expandedItems } = this.state;
-    const key = !!item.directory ? item.directory : item.path;
-    const included = expandedItems.includes(key);
-
-    this.setState(
-      {
-        expandedItems: included
-          ? expandedItems.filter(i => i !== key)
-          : [...expandedItems, key],
-      },
-      this.updateTree
-    );
+  /**
+   * Update the tree of navigation links, triggering re-render
+   *
+   * @param {array} actions functions to be applied to each node of the tree
+   */
+  updateTree(actions = []) {
+    this.setState({ tree: this.kendoConvert(actions) });
   }
 
   /**
-   * Start converting tree structure to a kendo-parseable structure
+   * Collapse all children of a particular item in the tree, then update the tree
+   *
+   * @param {object} item {directory} field destructured from an item in the tree
+   */
+  collapseChildrenItems({ directory }) {
+    if (directory) {
+      this.setState(
+        state => ({
+          expandedItems: state.expandedItems.filter(
+            item => !item.ancestors.includes(directory)
+          ),
+        }),
+        this.updateTree
+      );
+    }
+  }
+
+  /**
+   * Expand/Collapse a directory item in the tree, then update the tree. If the item has expanded children, they will also be collapsed when the parent is.
+   *
+   * @param {object} event {item} field destructured from event triggered by clicking item in the rendered tree
+   */
+  toggleItemExpansion({ item }) {
+    if (item.directory) {
+      const { expandedItems } = this.state;
+      const key = item.directory;
+      const included = !!expandedItems.find(
+        ({ directory }) => directory === key
+      );
+
+      this.setState(
+        {
+          expandedItems: included
+            ? expandedItems.filter(({ directory }) => directory !== key)
+            : [...expandedItems, { directory: key, ancestors: item.ancestors }],
+        },
+        () => {
+          if (included) {
+            // The item is being collapsed, collapse its children and then update the tree
+            this.collapseChildrenItems(item);
+          } else {
+            // The item has been expanded, update the tree
+            this.updateTree();
+          }
+        }
+      );
+    }
+  }
+
+  /**
+   * Start converting tree structure to a kendo parseable structure
    *
    * @param {array} tree structure generated from markdown frontmatter
    * e.g.
@@ -109,8 +150,14 @@ class NavTree extends Component {
    *  }
    * ]
    */
-  kendoConvert({ tree } = this.props) {
-    return tree[0] ? tree[0].links.map(this.convertTreeToKendoTree) : [];
+  kendoConvert(actions = []) {
+    const { tree } = this.props;
+
+    return tree[0]
+      ? tree[0].links.map(item =>
+          this.convertTreeToKendoTree(item, [], actions)
+        )
+      : [];
   }
 
   /**
@@ -118,22 +165,31 @@ class NavTree extends Component {
    * https://www.telerik.com/kendo-react-ui/components/treeview/data-binding/
    *
    * @param {object} item tree item to be converted into kendo-parseable structure
+   * @param {array} parentAncestors collection of directory names that are ancestor to this item
+   * @param {array} actions functions to be applied to each node of the tree
    */
-  convertTreeToKendoTree(item, parent) {
+  convertTreeToKendoTree(item, parentAncestors = [], actions = []) {
     const { expandedItems } = this.state;
-    const opened = expandedItems.includes(
-      !!item.directory ? item.directory : item.path
+    const opened = !!expandedItems.find(
+      ({ directory }) => directory === item.directory
     );
+    const childAncestors = !!item.directory
+      ? [...parentAncestors, item.directory]
+      : parentAncestors;
 
-    return {
+    const node = {
       text: item.directory ? item.directory : item.title,
       opened,
       items: Array.isArray(item.links)
-        ? item.links.map(this.convertTreeToKendoTree)
+        ? item.links.map(childItem =>
+            this.convertTreeToKendoTree(childItem, childAncestors, actions)
+          )
         : [],
-      parent,
+      ancestors: parentAncestors,
       ...item,
     };
+
+    return actions.reduce((mutatedNode, fn) => fn(mutatedNode), node);
   }
 
   render() {
@@ -153,8 +209,8 @@ class NavTree extends Component {
           textField="text"
           expandField="opened"
           itemRender={NavItem}
-          onExpandChange={this.expandItem}
-          onItemClick={this.expandItem}
+          onExpandChange={this.toggleItemExpansion}
+          onItemClick={this.toggleItemExpansion}
         />
       </div>
     );
