@@ -32,6 +32,8 @@ This project is primarily developer focused but it is open to contributions and 
 
 ## Todo (in no particular order)
 
+- [x] Automatic transformation of posts into wiki pages
+- [x] Auto-generated navigation tree
 - [ ] Responsive sidebar
 - [ ] Responsive post content
 - [ ] Friendly customization API (paths/prefixes, file locations, theming, etc)
