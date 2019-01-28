@@ -58,7 +58,7 @@ class NavTree extends Component {
     this.convertTreeToKendoTree = this.convertTreeToKendoTree.bind(this);
     this.collapseChildrenItems = this.collapseChildrenItems.bind(this);
     this.updateTree = this.updateTree.bind(this);
-    this.expandItem = this.toggleItemExpansion.bind(this);
+    this.toggleItemExpansion = this.toggleItemExpansion.bind(this);
   }
 
   componentDidMount() {
