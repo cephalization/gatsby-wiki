@@ -47,12 +47,22 @@ This project is primarily developer focused but it is open to contributions and 
 This project has not yet been optimized to be used as a [Gatsby Starter](https://www.gatsbyjs.org/starters/?v=2) so I recommend forking/cloning this repo and setting it up as your very own.
 
 ```
-git clone https://github.com/cephalization/gatsby-wiki YourProjectName # Clone the project as your own repo
+# Clone the project as your own repo
+git clone https://github.com/cephalization/gatsby-wiki YourProjectName
+
 cd YourProjectname
-rm -rf .git # Delete the references to this git repo
-git init . # (optional) Initialize your own repository so you can track your own changes
-npm install # or yarn install
-npm run develop # or gatsby develop
+
+# Delete the references to this git repo
+rm -rf .git
+
+# (optional) Initialize your own repository so you can track your own changes
+git init .
+
+# Install dependencies (can also use yarn)
+npm install 
+
+# Run the wiki locally, hot-reload when pages are updated but not added (yet?)
+npm run develop
 ```
 
 You can now host this template via your favorite hosting service (or yourself!), push to your own git<hub|lab|etc> repo, and customize to your heart's content!
