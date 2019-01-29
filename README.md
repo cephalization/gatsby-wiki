@@ -32,6 +32,8 @@ This project is primarily developer focused but it is open to contributions and 
 
 ## Todo (in no particular order)
 
+- [x] Automatic transformation of posts into wiki pages
+- [x] Auto-generated navigation tree
 - [ ] Responsive sidebar
 - [ ] Responsive post content
 - [ ] Friendly customization API (paths/prefixes, file locations, theming, etc)
@@ -45,12 +47,51 @@ This project is primarily developer focused but it is open to contributions and 
 This project has not yet been optimized to be used as a [Gatsby Starter](https://www.gatsbyjs.org/starters/?v=2) so I recommend forking/cloning this repo and setting it up as your very own.
 
 ```
-git clone https://github.com/cephalization/gatsby-wiki YourProjectName # Clone the project as your own repo
+# Clone the project as your own repo
+git clone https://github.com/cephalization/gatsby-wiki YourProjectName
+
 cd YourProjectname
-rm -rf .git # Delete the references to this git repo
-git init . # (optional) Initialize your own repository so you can track your own changes
-npm install # or yarn install
-npm run develop # or gatsby develop
+
+# Delete the references to this git repo
+rm -rf .git
+
+# (optional) Initialize your own repository so you can track your own changes
+git init .
+
+# Install dependencies (can also use yarn)
+npm install 
+
+# Run the wiki locally, hot-reload when pages are updated but not added (yet?)
+npm run develop
 ```
 
 You can now host this template via your favorite hosting service (or yourself!), push to your own git<hub|lab|etc> repo, and customize to your heart's content!
+
+## Adding new articles
+
+1. Create md file in `wiki/<topic>/<post>.md`
+    - Keep in mind, whatever directory structure you make here will be the link of the post!
+
+2. Setup frontmatter (special markdown header) at the top of the file like so:
+
+```
+---
+title: 'My First Post!'
+path: '/<topic>/<post>.md'
+---
+
+```
+
+3. Add post content 👌
+
+```
+---
+title: 'My First Post!'
+path: '/<topic>/<post>.md'
+---
+
+# How to add posts
+First you must read the README...
+```
+
+4. Restart your server
