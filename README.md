@@ -44,7 +44,13 @@ This project is primarily developer focused but it is open to contributions and 
 
 ## Getting Started
 
-This project has not yet been optimized to be used as a [Gatsby Starter](https://www.gatsbyjs.org/starters/?v=2) so I recommend forking/cloning this repo and setting it up as your very own.
+~This project has not yet been optimized to be used as a [Gatsby Starter](https://www.gatsbyjs.org/starters/?v=2) so I recommend forking/cloning this repo and setting it up as your very own.~
+
+**Note** This project will soon be setup as a [gatsby theme](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/). This will allow you to install this repo as a package, and run it as your gatsby site. All of the components in this repo will then be customizable and over-writable and you will be able to update the package to get all of the latest features without disturbing your content / customization.
+
+I recommend holding out from using this repo until this conversion is complete _but_, I encourage you to take a look at the
+code and the live version to see if having this project as a base to your own gatsby documentation site is something you are
+interested in!
 
 ```
 # Clone the project as your own repo
