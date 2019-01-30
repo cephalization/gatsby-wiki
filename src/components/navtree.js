@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'gatsby';
 import { TreeView } from '@progress/kendo-react-treeview';
 
+import {
+  persistToLocalStorage,
+  restoreFromLocalStorage,
+} from '../utils/local-storage-helper';
+
+const ITEMS_IN_STORAGE = ['expandedItems'];
+
 /**
  * Generate page link or directory title based on tree item
  *
@@ -61,8 +68,50 @@ class NavTree extends Component {
     this.toggleItemExpansion = this.toggleItemExpansion.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    try {
+      await this.restoreStateKeysFromStorage();
+    } catch (e) {
+      console.warn('Could not restore localstorage', e);
+    }
     this.updateTree();
+  }
+
+  /**
+   * Retrieve desired state keys from storage, apply them to state
+   */
+  async restoreStateKeysFromStorage() {
+    return await Promise.all(
+      ITEMS_IN_STORAGE.map(key => {
+        const data = restoreFromLocalStorage(key);
+
+        return new Promise(async (resolve, reject) => {
+          if (data) {
+            this.setState(
+              {
+                [key]: data,
+              },
+              resolve
+            );
+          } else if (data === null) {
+            // There was no data to retrieve
+            resolve();
+          } else {
+            // Some error has occurred
+            reject();
+          }
+        });
+      })
+    );
+  }
+
+  /**
+   * Put desired state keys into storage
+   */
+  storeStateKeysInStorage() {
+    ITEMS_IN_STORAGE.forEach(key =>
+      persistToLocalStorage(key, this.state[key])
+    );
   }
 
   /**
@@ -71,7 +120,10 @@ class NavTree extends Component {
    * @param {array} actions functions to be applied to each node of the tree
    */
   updateTree(actions = []) {
-    this.setState({ tree: this.kendoConvert(actions) });
+    this.setState(
+      { tree: this.kendoConvert(actions) },
+      this.storeStateKeysInStorage
+    );
   }
 
   /**
