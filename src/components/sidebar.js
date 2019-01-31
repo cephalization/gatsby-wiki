@@ -10,7 +10,7 @@ const Sidebar = ({ className }) => (
   <StaticQuery
     query={graphql`
       {
-        allMarkdownRemark {
+        allMarkdownRemark(sort: { fields: [frontmatter___path], order: ASC }) {
           edges {
             node {
               frontmatter {
