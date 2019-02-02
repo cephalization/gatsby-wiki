@@ -2,7 +2,6 @@ const config = {
   start_url: `/`,
   background_color: `#663399`,
   theme_color: `#663399`,
-  icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
 };
 
 module.exports = {
@@ -14,17 +13,23 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/pages`,
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
+        path: `./src/images`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `markdown`,
-        path: `${__dirname}/wiki`,
+        path: `./wiki`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -38,7 +43,6 @@ module.exports = {
         start_url: config.start_url,
         background_color: config.background_color,
         theme_color: config.theme_color,
-        icon: config.icon,
         display: `minimal-ui`,
       },
     },
@@ -52,7 +56,6 @@ module.exports = {
         start_url: config.start_url,
         background_color: config.background_color,
         theme_color: config.theme_color,
-        icon: config.icon,
         display: `standalone`,
       },
     },
