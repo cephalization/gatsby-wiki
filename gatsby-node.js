@@ -55,7 +55,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
       rules: [
         {
           test: /\.js$/,
-          include: path.dirname(require.resolve('gatsby-wiki-theme')),
+          include: path.dirname(require.resolve('gatsby-theme-wiki')),
           use: [loaders.js()],
         },
       ],
