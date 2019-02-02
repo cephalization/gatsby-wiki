@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-wiki-theme",
+  "name": "gatsby-theme-wiki",
   "private": false,
   "description": "A simple gatsby theme to generate a markdown based wiki",
   "version": "0.1.0",
