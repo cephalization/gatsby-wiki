@@ -46,4 +46,4 @@ This project is primarily developer focused but it is open to contributions and 
 
 This repo is a [Gatsby Theme](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/)
 
-Follow the instructions [here](https://github.com/cephalization/gatsby-starter-wiki-theme) to install a handy starter that implements this theme!
+Follow the instructions [here](https://github.com/cephalization/gatsby-starter-wiki-theme#getting-started) to install a handy starter that implements this theme!
