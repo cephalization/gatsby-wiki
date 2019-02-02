@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-wiki-template",
-  "private": true,
-  "description": "A simple template to generate a markdown based wiki",
+  "name": "gatsby-wiki-theme",
+  "private": false,
+  "description": "A simple gatsby theme to generate a markdown based wiki",
   "version": "0.1.0",
   "author": "Anthony Powell <adpowell@mtu.edu>",
   "dependencies": {
