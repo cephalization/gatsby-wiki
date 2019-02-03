@@ -5,7 +5,7 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby Wiki Template
+  Gatsby Wiki Theme
 </h1>
 
 A wiki theme for markdown driven documentation sites using [Gatsby](https://github.com/gatsbyjs/gatsby/).
